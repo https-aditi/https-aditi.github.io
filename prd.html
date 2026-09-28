@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%92%B3%3C/text%3E%3C/svg%3E"><meta property="og:title" content="PRD: Card Finder for BankKaro"><meta property="og:description" content="Interactive product proposal with a working prototype, funnel, prioritisation, kill criteria and rollout plan."><meta property="og:type" content="website"><meta name="theme-color" content="#f7f3ea"><title>PRD: Card Finder for BankKaro | Aditi Srivastava</title>
+<meta name="description" content="Interactive product proposal: an AI-assisted credit card recommender for BankKaro. Concept based on public information only.">
+<style>
+:root{--bg:#f7f3ea;--card:#fffdf8;--ink:#1a1a1a;--mut:#5f5b52;--line:#e2dccb;--navy:#1b2a6b;--coral:#f0654a;--soft:#fbe6e0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161f;--card:#1c1f2c;--ink:#f2efe6;--mut:#a6a496;--line:#2c3044;--navy:#8fa2ff;--coral:#ff7d63;--soft:#3a2622}}
+:root[data-theme="dark"]{--bg:#14161f;--card:#1c1f2c;--ink:#f2efe6;--mut:#a6a496;--line:#2c3044;--navy:#8fa2ff;--coral:#ff7d63;--soft:#3a2622}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+.w{max-width:940px;margin:0 auto;padding:0 20px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--mut)}
+.serif,h1,h2,h3{font-family:Georgia,"Times New Roman",serif}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:9}
+nav .w{display:flex;gap:14px;overflow-x:auto;white-space:nowrap;padding:10px 20px;font-size:13px}
+nav a{color:var(--mut);text-decoration:none}nav a:hover,nav a.on{color:var(--coral)}
+#bar{height:3px;background:var(--coral);width:0}
+header{padding:56px 0 24px}
+h1{font-size:clamp(38px,8vw,64px);line-height:1.05;margin:10px 0 14px;font-weight:800}
+h1 em{color:var(--coral)}
+.lead{font-size:18px;color:var(--mut);max-width:680px}
+.note{background:var(--soft);border-left:4px solid var(--coral);padding:12px 16px;border-radius:8px;font-size:14px;margin:18px 0}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 14px;border-radius:99px;font-size:13px;cursor:pointer}
+.pill.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.tag{background:var(--coral);color:#fff;padding:2px 10px;border-radius:99px;font-size:12px}
+section{padding:36px 0;border-top:1px solid var(--line)}
+.num{display:inline-block;background:var(--coral);color:#fff;font:600 12px ui-monospace,monospace;padding:2px 8px;border-radius:5px;margin-right:8px}
+h2{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:10px 0 8px}
+h2 em{color:var(--coral)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:16px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.c.n{background:var(--navy);color:#f2efe6}.c.n .mono{color:#c9d0f5}
+.c h3{margin:6px 0;font-size:20px}.c ul{margin:6px 0;padding-left:18px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.qa label{display:block;margin:6px 0;cursor:pointer}
+.ok{color:var(--coral);font-size:12px;font-weight:700}
+.pr{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:760px){.pr{grid-template-columns:1fr 1fr}}
+.opt{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.res{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;background:var(--card)}
+.res b{font-size:17px}.lab{float:right;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;color:#fff}
+.likely{background:#1f9d6b}.maybe{background:#d99a1e}.unlikely{background:#c2453a}
+pre{background:#101326;color:#e7eafc;padding:14px;border-radius:12px;overflow-x:auto;font-size:12.5px;margin:0}
+.btn{background:var(--coral);color:#fff;border:0;padding:10px 18px;border-radius:10px;font-weight:600;cursor:pointer}
+.btn.o{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+input[type=range]{width:100%;accent-color:var(--coral)}
+.k{font-size:34px;font-weight:800;font-family:Georgia,serif;color:var(--coral)}
+table{width:100%;border-collapse:collapse;font-size:14.5px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.ov{overflow-x:auto}
+footer{padding:36px 0 56px;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+a{color:var(--navy)}
+
+.ph{width:200px;height:340px;border:6px solid var(--ink);border-radius:26px;background:var(--card);padding:14px 12px;font-size:11.5px;margin:0 auto;overflow:hidden}
+.ph .b{height:10px;background:var(--line);border-radius:4px;margin:6px 0}.ph .bx{border:1px solid var(--line);border-radius:8px;padding:6px;margin:6px 0}.ph .cta{background:var(--coral);color:#fff;text-align:center;border-radius:8px;padding:6px;margin-top:8px;font-weight:700}.ph .ch{display:inline-block;border:1px solid var(--navy);border-radius:99px;padding:1px 8px;margin:2px 2px 2px 0}.ph .ch.on{background:var(--navy);color:var(--bg)}
+.fb{height:26px;background:var(--navy);border-radius:6px;margin:4px 0;min-width:2px;transition:width .2s}
+th.s{cursor:pointer;user-select:none}th.s:hover{color:var(--coral)}
+.cl{color:#fff;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap}
+.now{background:#1f9d6b}.later{background:#d99a1e}.kill{background:#c2453a}
+svg text{fill:var(--ink);font:12px sans-serif}.bxs{fill:var(--card);stroke:var(--navy);stroke-width:1.5}
+@media print{nav,#bar,.btn,.tags{display:none}}
+</style></head><body>
+<div id="bar"></div>
+<nav><div class="w" id="nv"><a href="#s1">01 Problem</a><a href="#s2">02 Users &amp; goals</a><a href="#s3">03 User stories</a><a href="#s4">04 Prototype</a><a href="#s5">05 API</a><a href="#s6">06 Metrics</a><a href="#s7">07 Risks</a><a href="#s8">08 Open questions</a></div></nav>
+<div class="w">
+<header>
+<div class="mono">Product proposal · v1.0 · Aditi Srivastava</div>
+<h1>Find the right card. <em>Faster.</em></h1>
+<p class="lead">Card Finder is a 4-question flow that recommends 2–3 credit cards matched to a user's spending and shows a likely-eligibility label before they apply. This page is the PRD, with a working prototype you can try.</p>
+<div class="note"><b>Concept only.</b> Built from public information about BankKaro's card comparison business. No internal data. The sample cards are fictional and every number is an assumption or an input you set yourself.</div>
+<div class="tags"><span class="tag">PRD</span><span class="tag">User stories</span><span class="tag">API contract</span><span class="tag">A/B test plan</span><span class="tag">Working prototype</span><span class="tag">Funnel</span><span class="tag">Prioritisation</span><span class="tag">Rollout</span></div>
+</header>
+
+<section id="s1"><div class="mono"><span class="num">01</span>The problem</div>
+<h2>Too many cards. Too little <em>clarity.</em></h2>
+<p>Cards differ in fees, rewards and eligibility. Users often apply for a card that doesn't fit their spending or that they may be declined for. That means wasted applications, declines and drop-offs before submitting.</p>
+<div class="c" style="margin-bottom:14px"><div class="mono">How I'd validate this before building</div><ul><li>5 short interviews with people who recently applied for a card</li><li>Session recordings of the current listing page, looking for where users stall</li><li>Review of decline reasons with partner banks, if shareable</li></ul></div>
+<div class="c n"><div class="mono">Hypothesis</div><h3>If users get 2–3 matched cards in under a minute, more of them will start and complete an application, and fewer will be declined.</h3></div>
+<h3 class="serif" style="margin-top:24px">How comparison sites handle this today</h3>
+<p style="color:var(--mut);font-size:14px">Patterns commonly seen on public card-comparison pages, described in general terms. Individual sites vary, so no site or figure is named.</p>
+<div class="ov"><table><tr><th>Pattern</th><th>Recommendation</th><th>Eligibility</th><th>Gap Card Finder targets</th></tr>
+<tr><td>Filter-and-list pages</td><td>User filters by fee, reward type or bank, then scans a long list</td><td>Minimum income and age shown as text on each card</td><td>User does the matching and the eligibility reading</td></tr>
+<tr><td>Ranked "best cards for X" articles</td><td>Editorial lists by category (fuel, travel, shopping)</td><td>Usually a generic note to check bank criteria</td><td>Not personalised to the user's spend</td></tr>
+<tr><td>Eligibility checkers</td><td>Few or none; a yes/no check on one chosen card</td><td>Often asks for PAN or phone before showing a result</td><td>Sensitive data early; no ranking</td></tr>
+<tr><td>Bank-owned pages</td><td>Own products only</td><td>Shown at application time</td><td>No cross-bank view</td></tr></table></div></section>
+
+<section id="s2"><div class="mono"><span class="num">02</span>Users &amp; goals</div>
+<h2>Who it's for, and <em>what it isn't.</em></h2>
+<div class="g">
+<div class="c"><div class="mono">Primary user</div><h3>First-time card seekers</h3><p>Early-career users unsure which card fits their spend.</p></div>
+<div class="c"><div class="mono">Secondary user</div><h3>Upgraders</h3><p>Existing cardholders who spend heavily on shopping, fuel or travel.</p></div>
+<div class="c"><div class="mono">Goals</div><ul><li>Recommend 2–3 suitable cards</li><li>Show eligibility likelihood before applying</li><li>Answer card questions from the card's own terms (Phase 2)</li></ul></div>
+<div class="c"><div class="mono">Non-goals (v1)</div><ul><li>Approving credit</li><li>Loans and other products</li><li>Replacing comparison pages</li></ul></div>
+</div></section>
+
+<section id="s3"><div class="mono"><span class="num">03</span>User stories</div>
+<h2>Five stories, with <em>acceptance criteria.</em></h2>
+<p style="color:var(--mut)">Tap a story. Criteria marked ✓ can be seen in the prototype below. Story 4 ships in Phase 2, not the MVP.</p>
+<div class="tabs" id="st"></div><div class="c qa" id="sd"></div></section>
+
+<section id="s4"><div class="mono"><span class="num">04</span>Prototype</div>
+<h2>Try <em>Card Finder.</em></h2>
+<p style="color:var(--mut)">Answer 4 questions. Ranking is rules-based and explainable, and no model decides eligibility. Cards and rules are fictional samples.</p>
+<div class="pr"><div class="c" id="qs"></div><div><div id="rs" class="c"><div class="mono">Results</div><p>Answer the questions to see matched cards.</p></div></div></div>
+<h3 class="serif" style="margin-top:28px">Mobile wireframes</h3>
+<p style="color:var(--mut);font-size:14px">Most users will arrive on a phone, so the flow is designed one-thumb first. Low fidelity; the high-fidelity version would be a clickable Figma prototype.</p>
+<div class="g">
+<div><div class="ph"><div class="mono">Step 2 of 4</div><div class="b" style="width:50%;background:var(--coral)"></div><b style="font-size:14px">Top spend category?</b><div style="margin-top:8px"><span class="ch on">Shopping</span><span class="ch">Fuel</span><span class="ch">Travel</span><span class="ch">Dining</span></div><div class="bx">₹30k / month ✓</div><div class="cta">Next</div><div style="color:var(--mut);margin-top:6px">No PAN needed</div></div><p class="mono" style="text-align:center">1 · Quiz</p></div>
+<div><div class="ph"><div class="mono">Top 3 matches</div><div class="bx"><b>ShopSmart</b> <span class="cl now" style="float:right;font-size:10px">Likely</span><div class="b" style="width:80%"></div><div class="b" style="width:55%"></div></div><div class="bx"><b>EverydayFree</b> <span class="cl now" style="float:right;font-size:10px">Likely</span><div class="b" style="width:70%"></div></div><div class="bx"><b>DineDelight</b> <span class="cl later" style="float:right;font-size:10px">Maybe</span><div class="b" style="width:60%"></div></div><div style="color:var(--mut)">Not a guarantee of approval</div></div><p class="mono" style="text-align:center">2 · Results</p></div>
+<div><div class="ph"><div class="mono">‹ Back</div><b style="font-size:14px">ShopSmart</b><div class="bx">Fee ₹500<br>Why it fits: online shopping rewards, low fee</div><div class="bx">Eligibility: <b>Likely</b><br>Income band meets minimum</div><div class="b" style="width:90%"></div><div class="b" style="width:65%"></div><div class="cta">Continue to apply</div><div style="color:var(--mut);margin-top:6px">Answers carry over</div></div><p class="mono" style="text-align:center">3 · Card detail</p></div>
+</div></section>
+
+<section id="s5"><div class="mono"><span class="num">05</span>API contract</div>
+<h2>What the prototype <em>sends and gets.</em></h2>
+<p style="color:var(--mut)">Live: these update as you change your answers above. <code>POST /v1/card-finder/recommendations</code></p>
+<div class="pr"><div><div class="mono" style="margin-bottom:6px">Request</div><pre id="rq">{}</pre></div><div><div class="mono" style="margin-bottom:6px">Response</div><pre id="rp">{}</pre></div></div>
+<div class="ov" style="margin-top:14px"><table><tr><th>Status</th><th>Meaning</th><th>Behaviour</th></tr><tr><td>400</td><td>Invalid input</td><td>Show inline field errors</td></tr><tr><td>429</td><td>Rate limit</td><td>Retry with backoff</td></tr><tr><td>503</td><td>Service down</td><td>Fall back to the standard comparison page</td></tr></table></div>
+<p class="mono" style="margin-top:14px">Events: cf_started · cf_answered_q{n} · cf_results_shown · cf_card_clicked · cf_chat_question_asked (Phase 2) · cf_apply_clicked</p>
+<h3 class="serif" style="margin-top:28px">System diagram</h3>
+<div class="ov"><svg viewBox="0 0 780 170" width="780" role="img" aria-label="Quiz to rules service to card config and apply flow"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0L8,4L0,8z" fill="#f0654a"/></marker></defs>
+<rect class="bxs" x="10" y="40" width="150" height="70" rx="10"/><text x="85" y="70" text-anchor="middle" font-weight="700">Quiz UI</text><text x="85" y="90" text-anchor="middle">Web / app, 4 answers</text>
+<rect class="bxs" x="220" y="40" width="150" height="70" rx="10"/><text x="295" y="70" text-anchor="middle" font-weight="700">Rules service</text><text x="295" y="90" text-anchor="middle">Score + eligibility</text>
+<rect class="bxs" x="430" y="40" width="150" height="70" rx="10"/><text x="505" y="70" text-anchor="middle" font-weight="700">Card config</text><text x="505" y="90" text-anchor="middle">Versioned, reviewed</text>
+<rect class="bxs" x="620" y="40" width="150" height="70" rx="10"/><text x="695" y="70" text-anchor="middle" font-weight="700">Apply flow</text><text x="695" y="90" text-anchor="middle">Existing, prefilled</text>
+<line x1="160" y1="75" x2="218" y2="75" stroke="#f0654a" stroke-width="2" marker-end="url(#ar)"/><line x1="370" y1="75" x2="428" y2="75" stroke="#f0654a" stroke-width="2" marker-end="url(#ar)"/><path d="M85 40 Q85 10 400 10 Q690 10 695 38" fill="none" stroke="#f0654a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<text x="190" y="66" text-anchor="middle" font-size="10">POST</text><text x="400" y="4" text-anchor="middle" font-size="10">user picks a card (answers carried)</text>
+<rect class="bxs" x="220" y="130" width="360" height="30" rx="8" stroke-dasharray="4 3"/><text x="400" y="150" text-anchor="middle">Analytics: cf_* events → funnel dashboard</text></svg></div>
+<div class="g"><div><div class="mono" style="margin-bottom:6px">Card config schema (one card)</div><pre>{
+  "card_id": "card_A",
+  "version": 7,
+  "category": "shopping",
+  "annual_fee": 500,
+  "min_income_band": 1,
+  "metro_only": false,
+  "reasons": ["Higher rewards on online shopping"],
+  "active": true,
+  "reviewed_by": "compliance",
+  "updated_at": "ISO-8601"
+}</pre></div><div class="c"><div class="mono">Engineering questions this raises</div><ul><li>Frontend: quiz state lives client-side; only the 4 answers are sent</li><li>Backend: stateless scoring, config cached and versioned</li><li>Kill switch: if the service returns 503, fall back to the standard listing</li><li>Config changes need review, not a deploy</li></ul></div></div></section>
+
+<section id="s6"><div class="mono"><span class="num">06</span>Metrics &amp; experiment</div>
+<h2>Ship it, measure it, <em>decide.</em></h2>
+<p style="color:var(--mut)">Set your own assumptions. Nothing here is real BankKaro data.</p>
+<div class="g">
+<div class="c"><div class="mono">Visitors per test arm</div><input type="range" id="v" min="1000" max="100000" step="1000" value="10000"><b id="vv"></b>
+<p style="font-size:13px;color:var(--mut);margin:10px 0 0">Completion and click-through come from the funnel below, so there is one model.</p><div class="mono" style="margin-top:10px">Control apply click-through (current page)</div><input type="range" id="bs" min="1" max="20" value="4"><b id="bsv"></b></div>
+<div class="c n"><div class="mono">Application starts per arm</div><div class="k" id="o1"></div><div class="mono">Control</div><div id="o2" style="font-size:22px"></div><div class="mono" style="margin-top:10px">Difference</div><div class="k" id="o3"></div></div>
+</div>
+<div class="ov" style="margin-top:16px"><table><tr><th>Metric</th><th>Definition</th><th>Direction</th></tr>
+<tr><td><b>North star</b></td><td>Application starts per visitor who sees Card Finder</td><td>Up vs. control</td></tr>
+<tr><td>Completion</td><td>cf_results_shown / cf_started</td><td>Above 70% (assumed)</td></tr>
+<tr><td>Leading indicator</td><td>Apply step submitted / apply clicked, plus complaints (readable in days 1–7)</td><td>Not worse than control</td></tr>
+<tr><td>Decline rate</td><td>Declined / submitted applications. Lagging: bank decisions arrive weeks later</td><td>Down vs. control</td></tr>
+<tr><td>Guardrail</td><td>Chat answers flagged incorrect in review</td><td>Below 2% (assumed)</td></tr></table></div>
+<h3 class="serif" style="margin-top:28px">Funnel view</h3>
+<p style="color:var(--mut);font-size:14px">Set the step-to-step conversion; drop-off updates. This funnel drives the application-starts calculator above.</p>
+<div class="g"><div class="c" id="fs"></div><div class="c" id="fo"></div></div>
+<h3 class="serif" style="margin-top:28px">Test design</h3>
+<p style="color:var(--mut);font-size:14px">Baseline is the control apply click-through above. Approximation for 80% power, 5% significance, two-sided; the data team would confirm.</p>
+<div class="g"><div class="c"><div class="mono">Minimum effect worth detecting</div><input type="range" id="mde" min="10" max="50" value="20"><b id="mdev"></b><div class="mono" style="margin-top:10px">Daily visitors per arm</div><input type="range" id="dv" min="200" max="5000" step="100" value="700"><b id="dvv"></b></div><div class="c n" id="sso"></div></div>
+<h3 class="serif" style="margin-top:28px">Prioritisation</h3>
+<p style="color:var(--mut);font-size:14px">Scores 1–5 are my judgement, not data. Score = impact × confidence ÷ effort. Click a header to sort.</p>
+<div class="ov"><table id="pt"></table></div>
+<div class="c" style="margin-top:16px"><div class="mono">Kill criteria</div><h3>Scale, fix or kill after <span id="kd">14</span> days</h3><input type="range" id="kn" min="7" max="28" value="14"><ul>
+<li><b>Kill</b> if, after <span class="kd">14</span> days and the sample in Test design, application starts per visitor have not risen vs. control, or the leading indicator (apply-step submits, complaints) is worse than control.</li>
+<li><b>Fix</b> if starts rise but completion is under 70% or the guardrail is breached: pause the ramp and change one thing.</li>
+<li><b>Scale</b> if starts rise, the leading indicator holds, and the guardrail stays under 2%. Confirm on decline rate when bank data arrives (assumed 30–45 days); if it is worse, pause the ramp and revisit the eligibility rules.</li></ul><p class="mono">Thresholds are assumptions to agree with the team before launch.</p></div>
+<h3 class="serif" style="margin-top:28px">Rollout plan</h3>
+<div class="ov"><table><tr><th>When</th><th>Who</th><th>What</th><th>Gate to move on</th></tr>
+<tr><td>Week 1</td><td>Compliance + PM</td><td>Review eligibility labels, disclaimer and reason wording</td><td>Written sign-off</td></tr>
+<tr><td>Weeks 1–3</td><td>Engineering</td><td>Build quiz UI, rules service, card config, events; Remote Config flag off by default</td><td>Events verified in staging</td></tr>
+<tr><td>Week 4</td><td>PM + Eng</td><td><b>5%</b> of listing-page traffic</td><td>No errors; 503 fallback tested; funnel matches expectation</td></tr>
+<tr><td>Week 5</td><td>PM + Eng</td><td><b>25%</b></td><td>Completion at or above 70%; no complaint spike</td></tr>
+<tr><td>Weeks 6–7</td><td>PM + Data</td><td><b>50%</b> as the A/B arm, read against kill criteria</td><td>Scale, fix or kill call</td></tr></table></div><p class="mono" style="margin-top:8px">Flag: card_finder_enabled + card_finder_rollout_pct (Remote Config). Setting it to 0 is the kill switch. Timeline is a proposal.</p>
+<div class="g"><div class="c"><div class="mono">Phase 1 · MVP</div><h3>Quiz + rules ranking</h3><p>50/50 A/B on the card listing page. No chat. Ship if application starts rise and decline rate doesn't worsen.</p></div>
+<div class="c"><div class="mono">Phase 2</div><h3>Grounded card Q&amp;A</h3><p>Retrieval over card terms, with citations and an "I'm not sure" path. Add only after answer quality is reviewed.</p></div></div></section>
+
+<section id="s7"><div class="mono"><span class="num">07</span>Risks &amp; mitigations</div>
+<h2>What could <em>go wrong.</em></h2>
+<div class="g" id="rk"></div></section>
+
+<section id="s8"><div class="mono"><span class="num">08</span>Open questions</div>
+<h2>What I'd ask <em>on day one.</em></h2>
+<div class="g"><div class="c"><p>Which card and partner data is available through APIs today, and how fresh is it?</p></div><div class="c"><p>What eligibility signals do banks allow to be shown before an application?</p></div><div class="c"><p>Who owns compliance review of recommendation wording?</p></div><div class="c"><p>Can a soft credit-score check be shown before an application?</p></div></div></section>
+<footer><p>Built by Aditi Srivastava · <a href="index.html">Back to portfolio</a> · <a href="mailto:aditisrivastavaagra@gmail.com">aditisrivastavaagra@gmail.com</a></p></footer>
+</div>
+<script>
+var $=function(s){return document.querySelector(s)};
+var ST=[["Get matched",["Asks 4 quick questions: monthly spend, top category, income band, city ✓","Results appear in under 3 seconds (target for the live API; the prototype runs locally)","No PAN or sensitive ID collected at this step ✓"]],
+["See why",["Each result shows the top 2 reasons ✓","Each result shows the annual fee ✓"]],
+["See eligibility",["Each card shows Likely / Maybe / Unlikely ✓","A short reason and a 'not a guarantee' note ✓"]],
+["Ask a question (Phase 2)",["Answers come only from the card's published terms","Each answer shows its source line","Says 'I'm not sure' when nothing is found"]],
+["Apply in one tap",["Continue goes to the existing apply flow","Answers carry over so nothing is retyped"]]];
+var sb=$("#st"),sd=$("#sd");
+ST.forEach(function(x,i){var b=document.createElement("button");b.className="pill"+(i?"":" on");b.textContent=(i+1)+". "+x[0];b.onclick=function(){[].forEach.call(sb.children,function(y){y.classList.remove("on")});b.classList.add("on");show(i)};sb.appendChild(b)});
+function show(i){sd.innerHTML='<div class="mono">Acceptance criteria</div>'+ST[i][1].map(function(t,j){var v=t.indexOf("✓")>-1;return '<label><input type="checkbox" '+(v?"checked":"")+'> '+t.replace(" ✓","")+(v?' <span class="ok">✓ in prototype</span>':"")+'</label>'}).join("")}
+show(0);
+var Q=[["spend","Monthly card spend",[["10000","₹10k"],["30000","₹30k"],["60000","₹60k+"]]],["cat","Top spend category",[["shopping","Online shopping"],["fuel","Fuel"],["travel","Travel"],["dining","Dining"]]],["inc","Income band",[["0","Under ₹3L"],["1","₹3–6L"],["2","₹6L+"]]],["city","City",[["metro","Metro"],["other","Other"]]]];
+var A={spend:"30000",cat:"shopping",inc:"1",city:"metro"};var touched={};
+var CARDS=[{id:"card_A",n:"ShopSmart (sample)",cat:"shopping",fee:500,min:1,r:"Higher rewards on online shopping"},{id:"card_B",n:"FuelPlus (sample)",cat:"fuel",fee:499,min:1,r:"Fuel surcharge savings"},{id:"card_C",n:"TravelElite (sample)",cat:"travel",fee:2999,min:2,r:"Travel points and lounge access"},{id:"card_D",n:"DineDelight (sample)",cat:"dining",fee:1000,min:1,r:"Dining discounts"},{id:"card_E",n:"EverydayFree (sample)",cat:"any",fee:0,min:0,r:"Lifetime free, rewards on everything"}];
+var qs=$("#qs");
+Q.forEach(function(q){var d=document.createElement("div");d.innerHTML='<div class="mono">'+q[1]+'</div><div class="opt"></div>';var o=d.querySelector(".opt");
+q[2].forEach(function(p){var b=document.createElement("button");b.className="pill"+(A[q[0]]==p[0]?" on":"");b.textContent=p[1];b.onclick=function(){A[q[0]]=p[0];touched[q[0]]=1;[].forEach.call(o.children,function(y){y.classList.remove("on")});b.classList.add("on");run()};o.appendChild(b)});qs.appendChild(d)});
+function run(){var inc=+A.inc,sp=+A.spend;var out=CARDS.map(function(c){var s=0,rs=[];if(c.cat==A.cat){s+=3;rs.push(c.r)}else if(c.cat=="any"){s+=1.5;rs.push(c.r)}
+if(c.fee<=500){s+=sp<=30000?1.5:.5;rs.push("Low annual fee (₹"+c.fee+")")}else{if(sp>=60000)s+=.5;rs.push("Annual fee ₹"+c.fee)}
+var e=inc>=c.min?"likely":(inc==c.min-1?"maybe":"unlikely");if(c.id=="card_C"&&A.city!="metro"&&e=="likely")e="maybe";
+if(e=="unlikely")s-=2;if(e=="maybe")s-=.5;return{card_id:c.id,name:c.n,reasons:rs.slice(0,2),eligibility:e,annual_fee:c.fee,_s:s}}).sort(function(a,b){return b._s-a._s}).slice(0,3);
+$("#rs").innerHTML='<div class="mono">Top 3 matches</div>'+out.map(function(c){return '<div class="res"><span class="lab '+c.eligibility+'">'+c.eligibility[0].toUpperCase()+c.eligibility.slice(1)+'</span><b>'+c.name+'</b><div style="font-size:14px;color:var(--mut)">'+c.reasons.join(" · ")+'</div></div>'}).join("")+'<p style="font-size:12.5px;color:var(--mut)">Eligibility labels are estimates, not a guarantee of approval.</p>';
+var req={monthly_spend:sp,top_category:A.cat,income_band:["under_3_lakh","3_6_lakh","6_lakh_plus"][inc],city:A.city==="metro"?"metro":"non_metro"};
+out.forEach(function(c){delete c._s;delete c.name});
+$("#rq").textContent=JSON.stringify(req,null,2);$("#rp").textContent=JSON.stringify({request_id:"cf_demo",cards:out},null,2)}
+run();
+var RK=[["Wrong or misleading answers","Ground answers in card terms only, cite sources, refuse when unsure, review a sample weekly."],["'Likely eligible' read as approval","Clear disclaimer; wording reviewed by compliance."],["Data privacy (income, city)","Collect the minimum, no sensitive IDs at this step, ask for clear consent and keep answers only as long as needed, in line with India's DPDP Act (legal to confirm)."],["Eligibility label ignores credit score","The quiz cannot see credit score, a main driver of declines. Label it an estimate from income and city only, track label vs. actual outcome, and add a credit-score step only after compliance review."],["Ranking tilts to higher-payout cards","Rank on fit only; payout never enters the score. Disclose that BankKaro may earn a commission."],["Partner rule changes","Keep eligibility rules in a maintained config, not in code."]];
+$("#rk").innerHTML=RK.map(function(r){return '<div class="c"><div class="mono">Risk</div><h3>'+r[0]+'</h3><p><b>Mitigation:</b> '+r[1]+'</p></div>'}).join("");
+function calc(){var v=+$("#v").value,bs=+$("#bs").value;$("#vv").textContent=" "+v.toLocaleString("en-IN");$("#bsv").textContent=" "+bs+"%";$("#o2").textContent=Math.round(v*bs/100).toLocaleString("en-IN");fun();ss()}
+["v","bs"].forEach(function(i){$("#"+i).oninput=calc});
+window.addEventListener("scroll",function(){var h=document.documentElement;$("#bar").style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%"});
+
+var FN=[["Started","",100],["Answered all 4","a",78],["Results shown","b",90],["Card clicked","c",40],["Apply clicked","d",30]];
+$("#fs").innerHTML='<div class="mono">Step conversion</div>'+FN.slice(1).map(function(f){return '<div class="mono" style="margin-top:10px">'+f[0]+'</div><input type="range" id="f'+f[1]+'" min="5" max="100" value="'+f[2]+'"><b id="f'+f[1]+'v"></b>'}).join("");
+function fun(){var n=+$("#v").value,h='<div class="mono">Users at each step</div>',first=n,res=0;FN.forEach(function(f,i){if(i){n=Math.round(n*+$("#f"+f[1]).value/100);$("#f"+f[1]+"v").textContent=" "+$("#f"+f[1]).value+"%"}
+var w=Math.max(1,n/first*100),prev=i?FN[i-1].c:n;h+='<div style="margin-top:8px;font-size:13px">'+f[0]+' · <b>'+n.toLocaleString("en-IN")+'</b>'+(i?' <span style="color:var(--coral)">−'+(100-+$("#f"+f[1]).value)+'% drop</span>':'')+'</div><div class="fb" style="width:'+w+'%"></div>';f.c=n;if(i==2)res=n});
+var b=Math.round(first*+$("#bs").value/100),d=b?Math.round((n-b)/b*100):0;$("#o1").textContent=n.toLocaleString("en-IN");$("#o3").textContent=(d>=0?"+":"")+d+"%";$("#fo").innerHTML=h+'<p class="mono">Quiz completion: '+(res/first*100).toFixed(0)+'% · Apply clicks per visitor: '+(n/first*100).toFixed(1)+'%</p>'}
+["fa","fb","fc","fd"].forEach(function(i){$("#"+i).addEventListener("input",calc)});
+function ss(){var p=+$("#bs").value/100,r=+$("#mde").value/100,dv=+$("#dv").value,n=Math.ceil(16*p*(1-p)/Math.pow(p*r,2));$("#mdev").textContent=" +"+$("#mde").value+"% relative";$("#dvv").textContent=" "+dv.toLocaleString("en-IN");$("#sso").innerHTML='<div class="mono">Needed per arm</div><div class="k">'+n.toLocaleString("en-IN")+'</div><div class="mono">Run length</div><div style="font-size:22px">'+Math.ceil(n/dv)+' days</div>'}
+["mde","dv"].forEach(function(i){$("#"+i).oninput=ss});calc();
+var PF=[["Quiz + rules ranking",5,2,4,"now"],["Eligibility label",5,2,3,"now"],["Prefilled apply flow",4,2,4,"now"],["Grounded card Q&A",4,4,2,"later"],["Save / share results",2,2,2,"later"],["Rewards estimate calculator",3,3,3,"later"],["ML approval prediction",3,5,1,"kill"],["Gamified spin-the-wheel",1,3,2,"kill"]].map(function(r){r.push(r[1]*r[3]/r[2]);return r});
+var ps={k:5,d:-1},H=["Feature","Impact","Effort","Confidence","Call","Score"];
+function pt(){var rows=PF.slice().sort(function(a,b){return ps.d*(typeof a[ps.k]=="number"?a[ps.k]-b[ps.k]:String(a[ps.k]).localeCompare(b[ps.k]))});
+$("#pt").innerHTML='<tr>'+H.map(function(h,i){var k=i==5?5:i;return '<th class="s" data-k="'+k+'">'+h+(ps.k==k?(ps.d>0?" ▲":" ▼"):"")+'</th>'}).join("")+'</tr>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td><span class="cl '+r[4]+'">'+({now:"Build now",later:"Later",kill:"Kill"})[r[4]]+'</span></td><td>'+r[5].toFixed(1)+'</td></tr>'}).join("");
+[].forEach.call(document.querySelectorAll("th.s"),function(t){t.onclick=function(){var k=+t.dataset.k;ps.d=ps.k==k?-ps.d:(k==0||k==4||k==2?1:-1);ps.k=k;pt()}})}
+pt();
+$("#kn").oninput=function(){$("#kd").textContent=this.value;[].forEach.call(document.querySelectorAll(".kd"),function(e){e.textContent=$("#kn").value})};
+</script></body></html>

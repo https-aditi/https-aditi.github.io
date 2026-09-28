@@ -89,7 +89,7 @@ footer h2{color:var(--text)}
 <div><b>Availability</b>Immediate joiner · Full-time / internship</div>
 <div><b>Education</b>B.Tech, Electronics &amp; Communication Engineering, JUET Guna (2022–2026)</div>
 <div><b>Experience</b>Reliance Jio (Software Eng. Intern, 2025) · DRDO (Embedded Systems Intern, 2024)</div>
-<div><b>Best-fit roles</b>AI/LLM product or engineering intern · Data analyst · Backend/API · Security &amp; network operations</div>
+<div><b>Best-fit roles</b>Product management intern · AI/LLM product or engineering intern · Data analyst · Backend/API · Security &amp; network operations</div>
 <div><b>Core stack</b>Python, SQL, LangChain, RAG, TensorFlow, Docker, ELK, REST APIs, AWS IoT</div>
 <div><b>Proof points</b>500+ logs/sec pipeline · 50+ microservices secured · 60% fewer vulnerabilities · 90% CNN accuracy</div>
 <div><b>Recognition</b>GSSoC'25 Mentor · AWS AI/ML Scholar '24 · HackerRank Gold</div>
@@ -101,6 +101,9 @@ footer h2{color:var(--text)}
 <p class="sub">Tap a card for the problem, what I built and the result. Filter by area, or pick a skill below to see where I used it.</p>
 <div class="filters" id="filters"></div>
 <div class="grid" id="grid">
+<div class="card" data-t="product ai backend" data-k="PRD API A/B testing REST JavaScript Claude"><h3>Card Finder for BankKaro (Product Proposal)</h3><div class="meta">Product · PRD + working prototype</div>
+<div class="det"><p><b>Problem:</b> Credit card comparison pages leave users to match fees, rewards and eligibility themselves, which leads to wasted applications and declines.</p><p><b>Built:</b> A full PRD as an interactive page: user stories with acceptance criteria, a working quiz prototype, REST API contract, system diagram, funnel and A/B test-design calculators, a scored prioritisation table, kill criteria and a Remote Config rollout plan. Concept only, from public information.</p><p><b>Result:</b> A reviewable proposal with a stated hypothesis, success metrics and clear scale, fix or kill rules. <a href="prd.html" onclick="event.stopPropagation()" style="color:var(--a);font-weight:700">Open the PRD →</a></p></div>
+<div class="chips"><span class="chip">PRD</span><span class="chip">API design</span><span class="chip">A/B testing</span><span class="chip">Prioritisation</span></div><div class="hint">Tap for details</div></div>
 <div class="card" data-t="ai backend" data-k="LangChain ChromaDB Ollama Streamlit RAG Python"><h3>RAG Document QA Chatbot</h3><div class="meta">AI · LLM app</div>
 <div class="det"><p><b>Problem:</b> Getting reliable answers from documents without sending them to a cloud service.</p><p><b>Built:</b> A fully local multi-step RAG pipeline with semantic search and a Streamlit UI. Agent handoff logic decides when to retrieve from the vector store and when to answer directly from the LLM.</p><p><b>Result:</b> Secure on-device Q&amp;A with real-time contextual answers.</p></div>
 <div class="chips"><span class="chip">LangChain</span><span class="chip">ChromaDB</span><span class="chip">Ollama</span><span class="chip">Streamlit</span></div><div class="hint">Tap for details</div></div>
@@ -155,7 +158,8 @@ function setP(n){R.setAttribute("data-p",n);sv("p",n);$$(".sw").forEach(function
 setP(ld("p")||"indigo");
 $("#mode").onclick=function(){var d=R.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");var n=d=="dark"?"light":"dark";R.setAttribute("data-theme",n);sv("t",n)};
 var t=ld("t");if(t)R.setAttribute("data-theme",t);
-var ROLES={"AI Product":{tags:["ai"],txt:"I turn real problems into working AI products: LLM apps, RAG pipelines and vision systems with a UI, an API and measurable results. I think like a product manager and build like an engineer."},
+var ROLES={"Product Management":{tags:["product"],txt:"I frame the problem, write the PRD, build the prototype with Claude and define how to measure it. An engineer moving into product: I scope it, ship a first version and decide what to scale, fix or kill from the data."},
+"AI Product":{tags:["ai"],txt:"I turn real problems into working AI products: LLM apps, RAG pipelines and vision systems with a UI, an API and measurable results. I think like a product manager and build like an engineer."},
 "Data & Analytics":{tags:["data"],txt:"I collect, clean and analyse high-volume data (500+ events/second) with Python, SQL and dashboards, then explain the findings clearly to technical and non-technical teams."},
 "Software & APIs":{tags:["backend"],txt:"I build and secure backend systems: REST APIs across 50+ microservices, Dockerised pipelines, and ML models exposed as encrypted, audited endpoints."},
 "Security & Systems":{tags:["sec","iot"],txt:"I monitor, secure and automate systems: SIEM validation, ELK log pipelines, automated alerting, and embedded hardware validated to military standards."}};
@@ -164,8 +168,8 @@ Object.keys(ROLES).forEach(function(k){var b=document.createElement("button");b.
 function setR(k){var r=ROLES[k];$("#lead").textContent=r.txt;$$(".pill").forEach(function(b){b.classList.toggle("on",b.textContent==k)});
 var g=$("#grid"),cs=$$("#grid .card");cs.forEach(function(c){var m=r.tags.some(function(x){return c.dataset.t.split(" ").indexOf(x)>-1});c.classList.toggle("rel",m);c._m=m});
 cs.sort(function(a,b){return (b._m?1:0)-(a._m?1:0)}).forEach(function(c){g.appendChild(c)})}
-setR("AI Product");
-var F=[["all","All"],["ai","AI"],["vision","Vision"],["iot","IoT & Hardware"],["sec","Security"],["backend","Backend"],["data","Data"]],fb=$("#filters");
+setR("Product Management");
+var F=[["all","All"],["product","Product"],["ai","AI"],["vision","Vision"],["iot","IoT & Hardware"],["sec","Security"],["backend","Backend"],["data","Data"]],fb=$("#filters");
 F.forEach(function(f,i){var b=document.createElement("button");b.className="pill"+(i?"":" on");b.textContent=f[1];b.onclick=function(){$$("#filters .pill").forEach(function(x){x.classList.remove("on")});b.classList.add("on");clr();$$("#grid .card").forEach(function(c){c.classList.toggle("hide",f[0]!="all"&&c.dataset.t.split(" ").indexOf(f[0])<0)})};fb.appendChild(b)});
 function clr(){$$("#skillchips .chip").forEach(function(x){x.classList.remove("on")})}
 $$("#skillchips .chip").forEach(function(b){b.onclick=function(){var on=!b.classList.contains("on");clr();$$("#filters .pill").forEach(function(x,i){x.classList.toggle("on",i==0)});b.classList.toggle("on",on);
